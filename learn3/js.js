@@ -19,7 +19,7 @@ let days = 30;
 let budgetDay = function (money, days) {
     return (money / days) + " " + (money % days);
 };
-console.log(budgetDay());
+console.log(budgetDay(money, days));
 
 
 money = +prompt("Ваш месячный доход?");
@@ -41,23 +41,23 @@ let howMuch2 = +prompt("Во сколько это обойдёться?");
 function sum(howMuch, howMuch2, money) {
     return money-(howMuch + howMuch2);
 }
-let budgetMonth = sum();
+let budgetMonth = sum(howMuch, howMuch2, money);
 console.log(budgetMonth);
 
 function sum2(mission, budgetMonth) {
     return mission / budgetMonth;
 }
-period = sum2();
+period = sum2(mission, budgetMonth);
 console.log(Math.ceil(period));
 
 function sum3(budgetMonth, days) {
     return budgetMonth / days;
 };
-budgetDay = sum3();
+budgetDay = sum3(budgetMonth, days);
 
 console.log(Math.floor(budgetDay));
 
-if (budgetDay >= 800){console.log("Высокий уровень дохода!")}
-else if (budgetDay >= 300 && budgetDay < 800){console.log("Средний уровень дохода!")}
-else if (budgetDay >= 0 && budgetDay < 300){console.log("Низкий уровень дохода!")}
-else if (budgetDay < 0){console.log("Что то пошло не так!")}
+if (budgetDay >= 800){console.log("Высокий уровень дохода!");}
+else if (budgetDay >= 300 && budgetDay < 800){console.log("Средний уровень дохода!");}
+else if (budgetDay >= 0 && budgetDay < 300){console.log("Низкий уровень дохода!");}
+else  {console.log("Что то пошло не так!");}
