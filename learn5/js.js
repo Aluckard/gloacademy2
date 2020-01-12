@@ -7,6 +7,25 @@ let money = 50000,
     mission = 250000,
     period = 6;
 
+// let start = function(){
+//     money = +prompt("Ваш месячный доход", 80000);
+//
+//     while (isNaN(money) || money === "" || money === null){
+//         money = +prompt("Ваш месячный доход", 80000);
+//     }
+// };
+
+let start = function (){
+    do {
+        money = +prompt("Ваш месячный доход", 80000);
+    }
+    while (isNaN(money) || money === "" || money === null){
+        money = +prompt("Ваш месячный доход", 80000);
+    }
+};
+
+start();
+
 let showTypeOf = function(data) {
     console.log(data, typeof(data));
 };
@@ -24,11 +43,11 @@ let days = 30;
 
 let budgetDay = function (money, days) {
     return (money / days) + " " + (money % days);
-}
+};
 showTypeOf(budgetDay(money, days));
 
 
-money = +prompt("Ваш месячный доход?", "80000");
+// money = +prompt("Ваш месячный доход?", "80000");
 
 addExpenses = prompt ("Перечислите возможные расходы за расчитываемый период через запятую!", "Интернет, телефон, бензин");
 showTypeOf(addExpenses.split(", "));
@@ -39,21 +58,48 @@ showTypeOf(typeof (money));
 showTypeOf(typeof (income));
 showTypeOf(typeof (deposit));
 
-let costs = prompt("Какие обязательные ежемесячные расходы у вас есть?", "бензин");
-let howMuch = +prompt("Во сколько это обойдёться?", "3000");
-let costs2 = prompt("Какие обязательные ежемесячные расходы у вас есть?", "интерет");
-let howMuch2 = +prompt("Во сколько это обойдёться?", "1000");
+let costs,
+    costs2;
 
-function sum(howMuch, howMuch2, money) {
-    return money-(howMuch + howMuch2);
+
+let getExpensesMonth = function () {
+    let howMuchSum = 0;
+    for (let i = 0; i < 2; i++){
+        if (i === 0){
+            costs = prompt("Введите обязательную статью расходов?", "интернет")
+        }
+        if (i === 1){
+            costs2 = prompt("Введите обязательную статью расходов?", "бензин")
+        }
+
+        howMuchSum += validHowMuch();
+
+    }
+    return howMuchSum;
+};
+
+
+let validHowMuch = function(){
+    let validHowMuch = +prompt("Во сколько это обойдёться?", "3000");
+        while (isNaN(validHowMuch) || validHowMuch === "" || validHowMuch === null){
+        validHowMuch = +prompt("Во сколько это обойдёться?", "3000");
+    }
+    return validHowMuch;
+};
+
+
+let expensesAmount = getExpensesMonth();
+
+function sum(money, expensesAmount) {
+    return money - expensesAmount;
 }
-let budgetMonth = sum(howMuch, howMuch2, money);
+let budgetMonth = sum(money, expensesAmount);
 showTypeOf(budgetMonth);
 
 function missionAccomplishment(mission, budgetMonth) {
     return mission / budgetMonth;
 }
-
+//количество месяцев которое потребуеться для достижения цели
 let getMissionAccomplishment = missionAccomplishment(mission, budgetMonth);
 showTypeOf(Math.ceil(getMissionAccomplishment));
 
@@ -72,17 +118,20 @@ let getStatusIncome = function () {
 };
 
 showTypeOf(getStatusIncome());
-
-function getExpensesMonth(howMuch, howMuch2) {
-    return howMuch + howMuch2;
-}
-showTypeOf(getExpensesMonth(howMuch, howMuch2));
+showTypeOf(expensesAmount);
 
 let accumulatedMonth = budgetMonth;
 showTypeOf(accumulatedMonth);
 
-let getTargetMonth = missionAccomplishment(mission, budgetMonth);
-showTypeOf(Math.floor(getTargetMonth) + " месяца для достижения цели!");
+//Если нам будет возвращаться отрицательное число от missionAccomplishment(цель - месячный доход) то будет выводиться "Цель не будет достигнута!"
+let targetMonth = function  (){
+    if (missionAccomplishment(mission, budgetMonth) <= 0){return ("Цель не будет достигнута!");}
+    else {return (Math.floor(missionAccomplishment(mission, budgetMonth)) + " месяца для достижения цели!");}
+};
+let getTargetMonth = targetMonth();
+showTypeOf(getTargetMonth);
+//
+
 
 function accumulatedPeriod (period, accumulatedMonth) {
     return period * accumulatedMonth;
