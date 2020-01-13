@@ -123,3 +123,4 @@ function accumulatedPeriod (period, accumulatedMonth) {
 }
 
 showTypeOf(Math.ceil(accumulatedPeriod(period, accumulatedMonth)) + " накопишь за " + Math.floor(period) + " месяцев");
+
